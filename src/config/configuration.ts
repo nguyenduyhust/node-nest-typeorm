@@ -12,5 +12,13 @@ export default () => {
       environment: env.NODE_ENV || 'development',
       apiUrl: env.API_URL || 'http://localhost:3000',
     },
+    database: {
+      type: env.DATABASE_TYPE || 'NEED TO CONFIGURED',
+      host: env.DATABASE_HOST || 'NEED TO CONFIGURED',
+      port: parseInt(env.MYSQL_PORT) || 'NEED TO CONFIGURED',
+      name: env.MYSQL_DATABASE || 'NEED TO CONFIGURED',
+      username: env.MYSQL_USER || 'NEED TO CONFIGURED',
+      password: env.MYSQL_PASSWORD || 'NEED TO CONFIGURED',
+    },
   };
 };

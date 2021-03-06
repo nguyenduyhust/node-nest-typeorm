@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  mysql:
+    container_name: node-nest-typeorm-mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE: node-nest-typeorm
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Test@!23
+      MYSQL_ROOT_PASSWORD: Test@!23
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    restart: "no"
+
+  phpmyadmin:
+    container_name: node-nest-typeorm-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - "8080:80"
+    restart: "no"
+    depends_on:
+      - mysql
