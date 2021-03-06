@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 
 import { AbstractDTO } from '~/common/dto/abstract.dto';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 
 export class UserDTO extends AbstractDTO {
   @ApiProperty()
@@ -17,7 +17,7 @@ export class UserDTO extends AbstractDTO {
   @ApiProperty()
   phone: string;
 
-  constructor(user: User) {
+  constructor(user: UserEntity) {
     super(user);
     this.id = user.id;
     this.email = user.email;

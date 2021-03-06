@@ -4,8 +4,8 @@ import { AbstractEntity } from '~/common/entity/abstract.entity';
 import { UserDTO } from './user.dto';
 
 @Entity('user')
-export class User extends AbstractEntity<UserDTO> {
-  constructor(partial: Partial<User>) {
+export class UserEntity extends AbstractEntity<UserDTO> {
+  constructor(partial: Partial<UserEntity>) {
     super();
     Object.assign(this, partial);
   }
