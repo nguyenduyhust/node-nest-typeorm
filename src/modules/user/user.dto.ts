@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 
-import { AbstractDTO } from '~/common/dto/abstract.dto';
+import { AbstractDTO } from '@common/dto/abstract.dto';
 import { UserEntity } from './user.entity';
 
 export class UserDTO extends AbstractDTO {

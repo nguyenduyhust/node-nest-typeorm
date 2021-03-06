@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from 'nest-router';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import configuration from '~/config/configuration';
-import { AppService } from './app.service';
+import configuration from '@config/configuration';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -34,7 +32,7 @@ import { UserModule } from './modules/user/user.module';
     RouterModule.forRoutes([{ path: 'api', module: UserModule }]),
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

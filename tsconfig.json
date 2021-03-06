@@ -16,7 +16,10 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "@common/*": ["src/common/*"],
+      "@config/*": ["src/config/*"],
+      "@helpers/*": ["src/helpers/*"],
     }
   }
 }
