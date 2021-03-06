@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { RouterModule } from 'nest-router';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -30,6 +31,7 @@ import { UserModule } from './modules/user/user.module';
       },
       inject: [ConfigService],
     }),
+    RouterModule.forRoutes([{ path: 'api', module: UserModule }]),
     UserModule,
   ],
   controllers: [AppController],
