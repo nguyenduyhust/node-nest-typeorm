@@ -39,6 +39,7 @@
     "dotenv": "^8.2.0",
     "mysql": "^2.18.1",
     "nest-router": "^1.0.9",
+    "nestjs-typeorm-paginate": "^2.3.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",

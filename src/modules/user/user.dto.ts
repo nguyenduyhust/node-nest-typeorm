@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 
 import { AbstractDTO } from '@common/dto/abstract.dto';
+import { PaginationDTO } from '@common/dto/pagination.dto';
 import { UserEntity } from './user.entity';
 
 export class UserDTO extends AbstractDTO {
@@ -48,4 +49,9 @@ export class CreateUserDTO {
   @MaxLength(15, { message: '15' })
   @IsNotEmpty({ message: 'required' })
   phone: string;
+}
+
+export class UserPaginationDTO extends PaginationDTO {
+  @ApiProperty({ isArray: true, type: UserDTO })
+  items: UserDTO[];
 }
