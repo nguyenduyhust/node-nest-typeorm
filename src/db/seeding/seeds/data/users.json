@@ -1,0 +1,42 @@
+[
+  {
+    "email": "test1@test.com",
+    "password": "Test@!23",
+    "fullName": "Test 1",
+    "phone": "0123456789",
+    "createdAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)",
+    "updatedAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)"
+  },
+  {
+    "email": "test2@test.com",
+    "password": "Test@!23",
+    "fullName": "Test 2",
+    "phone": "0123456789",
+    "createdAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)",
+    "updatedAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)"
+  },
+  {
+    "email": "test3@test.com",
+    "password": "Test@!23",
+    "fullName": "Test 3",
+    "phone": "0123456789",
+    "createdAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)",
+    "updatedAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)"
+  },
+  {
+    "email": "test4@test.com",
+    "password": "Test@!23",
+    "fullName": "Test 4",
+    "phone": "0123456789",
+    "createdAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)",
+    "updatedAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)"
+  },
+  {
+    "email": "test5@test.com",
+    "password": "Test@!23",
+    "fullName": "Test 5",
+    "phone": "0123456789",
+    "createdAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)",
+    "updatedAt": "Tue Jul 21 2020 09:30:32 GMT+0700 (Indochina Time)"
+  }
+]

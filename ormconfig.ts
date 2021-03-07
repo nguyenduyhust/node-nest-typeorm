@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import { StringHelper } from './src/helpers/string.helper';
-import { ConnectionOptions } from 'typeorm';
+import { ConnectionOptions } from 'typeorm-seeding';
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV || 'development'}`,
@@ -25,6 +25,8 @@ const connectionOptions: ConnectionOptions = {
   cli: {
     migrationsDir: 'src/db/migrations',
   },
+  seeds: ['src/db/seeding/seeds/**/*.ts'],
+  factories: ['src/db/seeding/factories/**/*.ts'],
 };
 
 export default connectionOptions;
