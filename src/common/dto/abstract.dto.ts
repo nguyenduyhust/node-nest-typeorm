@@ -8,7 +8,7 @@ export class AbstractDTO {
   @ApiProperty()
   updatedAt: string;
 
-  constructor(entity: AbstractEntity) {
+  constructor(entity: AbstractEntity<AbstractDTO>) {
     this.createdAt = entity.createdAt.toISOString();
     this.updatedAt = entity.updatedAt.toISOString();
   }

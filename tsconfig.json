@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    // "strict": true,
+    "strict": true,
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -15,6 +15,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "skipLibCheck": true,
     "paths": {
       "~/*": ["src/*"],
       "@common/*": ["src/common/*"],

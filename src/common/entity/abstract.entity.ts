@@ -1,10 +1,7 @@
 import { BaseEntity, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { AbstractDTO } from '~/common/dto/abstract.dto';
 
-export abstract class AbstractEntity<
-  DTO extends AbstractDTO = AbstractDTO,
-  DTOOption = any
-> extends BaseEntity {
+export abstract class AbstractEntity<DTO extends AbstractDTO, DTOOption = any> extends BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
@@ -17,7 +14,7 @@ export abstract class AbstractEntity<
   })
   updatedAt: Date;
 
-  dtoClass: new (entity: AbstractEntity, options?: any) => DTO;
+  dtoClass: new (entity: any, options?: DTOOption) => DTO;
 
   toDto(options?: DTOOption): DTO {
     return new this.dtoClass(this, options);

@@ -16,7 +16,7 @@ export class UserController {
 
   @Post()
   async create(@Body() payload: CreateUserDTO) {
-    return (await this.userService.create(payload)).toDto();
+    return this.userService.create(payload);
   }
 
   @Get()

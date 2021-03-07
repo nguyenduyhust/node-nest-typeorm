@@ -14,12 +14,12 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(payload: CreateUserInput) {
-    const user = new UserEntity({
+  async create(payload: CreateUserInput): Promise<UserDTO> {
+    const user = await new UserEntity({
       ...payload,
       password: await UserEntity.hashPassword(payload.password),
-    });
-    return this.userRepository.save(user);
+    }).save();
+    return user.toDto();
   }
 
   async getUsers(options: IPaginationOptions): Promise<Pagination<UserDTO>> {
