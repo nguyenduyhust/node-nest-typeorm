@@ -23,7 +23,7 @@ async function bootstrap() {
     .addCookieAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('api/doc', app, document);
   await app.listen(configService.get('app.port') || 3000);
 }
 bootstrap();

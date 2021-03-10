@@ -3,7 +3,6 @@ import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
 import { CreateUserDTO, UserPaginationDTO } from './user.dto';
-
 import { UserService } from './user.service';
 
 @ApiTags('users')
