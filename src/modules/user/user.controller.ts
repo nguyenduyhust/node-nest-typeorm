@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Get, Query, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
+import { Controller, Get, Query, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
-import { CreateUserDTO, UserPaginationDTO } from './user.dto';
+import { UserPaginationDTO } from './user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('users')
@@ -12,11 +12,6 @@ export class UserController {
     private readonly configService: ConfigService,
     private readonly userService: UserService,
   ) {}
-
-  // @Post()
-  // async create(@Body() payload: CreateUserDTO) {
-  //   return this.userService.create(payload);
-  // }
 
   @Get()
   @ApiResponse({
