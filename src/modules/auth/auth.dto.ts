@@ -42,13 +42,7 @@ export class AuthResponseDTO {
   token: string;
 
   @ApiProperty()
-  expires: number;
-
-  @ApiProperty()
   refresh_token: string;
-
-  // @ApiProperty()
-  // token_type: string;
 
   @ApiProperty()
   user: UserDTO;
