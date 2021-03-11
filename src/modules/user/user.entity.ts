@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 import { EncryptHelper } from '@helpers/encrypt.helper';
-import { AbstractEntity } from '@common/entity/abstract.entity';
+import { AbstractEntity } from '~/common/entities/abstract.entity';
 import { UserDTO } from './user.dto';
 
 @Entity('user')

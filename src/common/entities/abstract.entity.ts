@@ -1,5 +1,5 @@
 import { BaseEntity, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { AbstractDTO } from '~/common/dto/abstract.dto';
+import { AbstractDTO } from '~/common/dtos/abstract.dto';
 
 export abstract class AbstractEntity<DTO extends AbstractDTO, DTOOption = any> extends BaseEntity {
   @CreateDateColumn({

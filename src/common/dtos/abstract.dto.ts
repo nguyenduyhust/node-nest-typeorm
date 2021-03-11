@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AbstractEntity } from '~/common/entity/abstract.entity';
+import { AbstractEntity } from '~/common/entities/abstract.entity';
 
 export class AbstractDTO {
   @ApiProperty()
