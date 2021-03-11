@@ -13,10 +13,10 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
-  @Post()
-  async create(@Body() payload: CreateUserDTO) {
-    return this.userService.create(payload);
-  }
+  // @Post()
+  // async create(@Body() payload: CreateUserDTO) {
+  //   return this.userService.create(payload);
+  // }
 
   @Get()
   @ApiResponse({

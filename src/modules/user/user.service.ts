@@ -6,6 +6,7 @@ import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginat
 import { UserDTO } from './user.dto';
 import { UserEntity } from './user.entity';
 import { CreateUserInput } from './user.interface';
+import { ErrorHelper } from '@helpers/error.helper';
 
 @Injectable()
 export class UserService {
@@ -14,12 +15,24 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
+  findOneById(id: string) {
+    return this.userRepository.findOne({ id });
+  }
+
+  findOneByEmail(email: string) {
+    return this.userRepository.findOne({ email });
+  }
+
   async create(payload: CreateUserInput): Promise<UserDTO> {
-    const user = await new UserEntity({
+    const user = await this.userRepository.findOne({ email: payload.email });
+    if (user) {
+      throw ErrorHelper.BadRequestException('User already exists');
+    }
+    const newUser = await new UserEntity({
       ...payload,
       password: await UserEntity.hashPassword(payload.password),
     }).save();
-    return user.toDto();
+    return newUser.toDto();
   }
 
   async getUsers(options: IPaginationOptions): Promise<Pagination<UserDTO>> {

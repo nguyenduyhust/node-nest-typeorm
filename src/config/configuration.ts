@@ -11,6 +11,11 @@ export default () => {
       port: parseInt(env.PORT, 10) || 3000,
       environment: env.NODE_ENV || 'development',
       apiUrl: env.API_URL || 'http://localhost:3000',
+      auth: {
+        secret: env.SECRET,
+        tokenExpires: parseInt(env.TOKEN_EXPIRES) || 3600,
+        refreshTokenExpires: env.REFRESH_TOKEN_EXPIRES || '1d',
+      },
     },
     database: {
       type: env.DATABASE_TYPE || 'NEED TO CONFIGURED',
