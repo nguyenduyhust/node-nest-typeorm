@@ -73,11 +73,11 @@ export class AuthService {
 
   async refreshToken(refreshToken: string): Promise<GenerateTokenReturn> {
     try {
-      const tokenObject = await TokenHelper.verify<any>(
+      const tokenDataObj = await TokenHelper.verify<{ user_id: string }>(
         refreshToken,
         `refresh_${this.configService.get('app.auth.secret')}`,
       );
-      const user = await this.userService.findOneById(tokenObject.user_id);
+      const user = await this.userService.findOneById(tokenDataObj.user_id);
       if (!user) {
         throw ErrorHelper.BadRequestException('Invalid token');
       }

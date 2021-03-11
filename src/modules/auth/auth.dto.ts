@@ -47,3 +47,9 @@ export class AuthResponseDTO {
   @ApiProperty()
   user: UserDTO;
 }
+
+export class AuthRefreshTokenDTO {
+  @ApiProperty()
+  @IsNotEmpty({ message: 'required' })
+  refresh_token: string;
+}
