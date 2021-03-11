@@ -17,15 +17,17 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.use(cookieParser());
   // swagger
-  const options = new DocumentBuilder()
-    .setTitle('Node Nest Typeorm API')
-    .setDescription('Node Nest Typeorm API')
-    .setVersion('0.1')
-    .addBearerAuth()
-    .addCookieAuth('jwt-token')
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api/doc', app, document);
+  if (configService.get('app.environment') === 'development') {
+    const options = new DocumentBuilder()
+      .setTitle('Node Nest Typeorm API')
+      .setDescription('Node Nest Typeorm API')
+      .setVersion('0.1')
+      .addBearerAuth()
+      .addCookieAuth('jwt-token')
+      .build();
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('api/doc', app, document);
+  }
   await app.listen(configService.get('app.port') || 3000);
 }
 bootstrap();
