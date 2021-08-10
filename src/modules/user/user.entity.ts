@@ -1,10 +1,9 @@
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 import { EncryptHelper } from '@helpers/encrypt.helper';
 import { AbstractEntity } from '~/common/entities/abstract.entity';
-import { UserDTO } from './user.dto';
 
 @Entity('user')
-export class UserEntity extends AbstractEntity<UserDTO> {
+export class UserEntity extends AbstractEntity {
   constructor(partial: Partial<UserEntity>) {
     super();
     Object.assign(this, partial);
@@ -47,6 +46,4 @@ export class UserEntity extends AbstractEntity<UserDTO> {
     nullable: true,
   })
   phone: string;
-
-  dtoClass = UserDTO;
 }

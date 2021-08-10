@@ -4,6 +4,8 @@ import { AbstractDTO } from '~/common/dtos/abstract.dto';
 import { PaginationDTO } from '~/common/dtos/pagination.dto';
 import { UserEntity } from './user.entity';
 
+export interface UserDTOOptions {}
+
 export class UserDTO extends AbstractDTO {
   @ApiProperty()
   id: string;
@@ -17,7 +19,9 @@ export class UserDTO extends AbstractDTO {
   @ApiProperty()
   phone: string;
 
-  constructor(user: UserEntity) {
+  constructor(user: UserEntity, options?: UserDTOOptions) {
+    const {} = options || {};
+
     super(user);
     this.id = user.id;
     this.email = user.email;

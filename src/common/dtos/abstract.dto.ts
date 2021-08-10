@@ -6,10 +6,10 @@ export class AbstractDTO {
   createdAt: string;
 
   @ApiProperty()
-  updatedAt: string;
+  updatedAt?: string;
 
-  constructor(entity: AbstractEntity<AbstractDTO>) {
+  constructor(entity: AbstractEntity) {
     this.createdAt = entity.createdAt.toISOString();
-    this.updatedAt = entity.updatedAt.toISOString();
+    this.updatedAt = entity.updatedAt ? entity.updatedAt.toISOString() : undefined;
   }
 }

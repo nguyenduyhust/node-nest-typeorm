@@ -32,7 +32,7 @@ export class UserService {
       ...payload,
       password: await UserEntity.hashPassword(payload.password),
     }).save();
-    return newUser.toDto();
+    return new UserDTO(newUser);
   }
 
   async getUsers(options: IPaginationOptions): Promise<Pagination<UserDTO>> {
@@ -40,7 +40,7 @@ export class UserService {
     queryBuilder.orderBy('u.createdAt', 'DESC');
 
     const records = await paginate<UserEntity>(queryBuilder, options);
-    const items: UserDTO[] = records.items.map((item) => ({ ...item.toDto() }));
+    const items: UserDTO[] = records.items.map((item) => ({ ...new UserDTO(item) }));
 
     return {
       ...records,

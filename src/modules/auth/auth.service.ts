@@ -34,7 +34,7 @@ export class AuthService {
       throw ErrorHelper.BadRequestException('Password was wrong');
     }
 
-    return this.generateToken(user.toDto());
+    return this.generateToken(new UserDTO(user));
   }
 
   async validateRequest(req: Request): Promise<UserDTO> {
@@ -50,7 +50,7 @@ export class AuthService {
       if (!user) {
         throw ErrorHelper.UnauthorizedException('Invalid token');
       }
-      return user.toDto();
+      return new UserDTO(user);
     } catch (error) {
       throw ErrorHelper.UnauthorizedException('Unauthorized');
     }
@@ -86,7 +86,7 @@ export class AuthService {
         throw ErrorHelper.BadRequestException('Invalid token');
       }
 
-      return this.generateToken(user.toDto());
+      return this.generateToken(new UserDTO(user));
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
         throw ErrorHelper.BadRequestException('Token expired');
