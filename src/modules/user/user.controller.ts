@@ -4,12 +4,13 @@ import { ConfigService } from '@nestjs/config';
 
 import { UserPaginationDTO } from './user.dto';
 import { UserService } from './user.service';
+import { EnvConfiguration } from '~/config/configuration';
 
 @ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(
-    private readonly configService: ConfigService,
+    private configService: ConfigService<EnvConfiguration>,
     private readonly userService: UserService,
   ) {}
 
@@ -28,7 +29,7 @@ export class UserController {
     return this.userService.getUsers({
       page,
       limit,
-      route: `${this.configService.get('app.apiUrl')}/users`,
+      route: `${this.configService.get('apiUrl')}/users`,
     });
   }
 }

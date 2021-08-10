@@ -9,10 +9,14 @@ import { ErrorHelper } from '@helpers/error.helper';
 import { EncryptHelper } from '@helpers/encrypt.helper';
 import { UserDTO } from '../user/user.dto';
 import { CookieHelper } from '@helpers/cookie.helper';
+import { EnvConfiguration } from '~/config/configuration';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private configService: ConfigService) {}
+  constructor(
+    private userService: UserService,
+    private configService: ConfigService<EnvConfiguration>,
+  ) {}
 
   async register(payload: RegisterUserInput): Promise<boolean> {
     await this.userService.create(payload);
@@ -40,7 +44,7 @@ export class AuthService {
         : String(CookieHelper.getToken(req));
       const tokenDataObj = await TokenHelper.verify<{ user_id: string }>(
         accessToken,
-        `${this.configService.get('app.auth.secret')}`,
+        `${this.configService.get('secret')}`,
       );
       const user = await this.userService.findOneById(tokenDataObj.user_id);
       if (!user) {
@@ -55,13 +59,13 @@ export class AuthService {
   async generateToken(user: UserDTO): Promise<GenerateTokenReturn> {
     const token = await TokenHelper.generate(
       { user_id: user.id },
-      this.configService.get('app.auth.secret') as any,
-      this.configService.get('app.auth.tokenExpires') as any,
+      this.configService.get('secret') as any,
+      this.configService.get('tokenExpires') as any,
     );
     const refreshToken = await TokenHelper.generate(
       { user_id: user.id },
-      `refresh_${this.configService.get('app.auth.secret')}`,
-      this.configService.get('app.auth.refreshTokenExpires') as any,
+      `refresh_${this.configService.get('secret')}`,
+      this.configService.get('refreshTokenExpires') as any,
     );
 
     return {
@@ -75,7 +79,7 @@ export class AuthService {
     try {
       const tokenDataObj = await TokenHelper.verify<{ user_id: string }>(
         refreshToken,
-        `refresh_${this.configService.get('app.auth.secret')}`,
+        `refresh_${this.configService.get('secret')}`,
       );
       const user = await this.userService.findOneById(tokenDataObj.user_id);
       if (!user) {
