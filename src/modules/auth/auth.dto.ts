@@ -3,35 +3,38 @@ import { MaxLength, IsNotEmpty, IsOptional, MinLength, IsEmail } from 'class-val
 
 export class RegisterDTO {
   @ApiProperty()
-  @MaxLength(60, { message: '60' })
-  @IsNotEmpty({ message: 'required' })
+  @IsNotEmpty()
+  @IsEmail()
   email: string;
 
-  @ApiProperty()
-  @MinLength(6, { message: '6' })
-  @MaxLength(60, { message: '60' })
-  @IsNotEmpty({ message: 'required' })
+  @ApiProperty({ minLength: 8, maxLength: 20 })
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(20)
   password: string;
 
-  @ApiProperty()
-  @MaxLength(180, { message: '180' })
-  @IsNotEmpty({ message: 'required' })
+  @ApiProperty({ maxLength: 180 })
+  @IsNotEmpty()
+  @MaxLength(180)
   fullName: string;
 
-  @ApiProperty()
+  @ApiProperty({ maxLength: 15 })
+  @IsNotEmpty()
   @IsOptional()
-  @MaxLength(15, { message: '15' })
-  @IsNotEmpty({ message: 'required' })
+  @MaxLength(15)
   phone: string;
 }
 
 export class LoginDTO {
   @ApiProperty()
-  @IsEmail({}, { message: 'invalid' })
+  @IsNotEmpty()
+  @IsEmail()
   email: string;
 
-  @ApiProperty()
-  @IsNotEmpty({ message: 'required' })
+  @ApiProperty({ minLength: 8, maxLength: 20 })
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(20)
   password: string;
 }
 
@@ -45,7 +48,7 @@ export class LoginResponseDTO {
 
 export class RefreshAccessTokenDTO {
   @ApiProperty()
-  @IsNotEmpty({ message: 'required' })
+  @IsNotEmpty()
   refreshToken: string;
 }
 

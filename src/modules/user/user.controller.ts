@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 import { GetUsersQueryDTO, GetUsersResponseDTO } from './user.dto';
 import { UserService } from './user.service';
@@ -11,6 +11,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get list of users' })
   @ApiResponse({
     status: 200,
     type: GetUsersResponseDTO,
