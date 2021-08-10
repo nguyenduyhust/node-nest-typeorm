@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { EnvConfiguration } from './config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,10 +15,10 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  const configService = app.get(ConfigService);
+  const configService: ConfigService<EnvConfiguration> = app.get(ConfigService);
   app.use(cookieParser());
   // swagger
-  if (configService.get('app.environment') === 'development') {
+  if (configService.get('nodeEnv') === 'development') {
     const options = new DocumentBuilder()
       .setTitle('Node Nest Typeorm API')
       .setDescription('Node Nest Typeorm API')
@@ -28,6 +29,6 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api/doc', app, document);
   }
-  await app.listen(configService.get('app.port') || 3000);
+  await app.listen(configService.get('port') || 3000);
 }
 bootstrap();
