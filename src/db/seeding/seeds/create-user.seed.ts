@@ -4,22 +4,33 @@ import { UserEntity } from '~/modules/user/user.entity';
 import { EncryptHelper } from '@helpers/encrypt.helper';
 import * as userData from './data/users.json';
 
-export default class CreateEndUsers implements Seeder {
+export default class CreateUsers implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
-    const arr = await Promise.all(
-      userData.map(async (item) => ({
-        ...item,
-        password: await EncryptHelper.hash(item.password),
-      })),
-    );
-    await connection
-      .createQueryBuilder()
-      .insert()
-      .into(UserEntity)
-      .values(arr as any)
-      .execute();
+    const userRepository = connection.getRepository(UserEntity);
 
-    // generate random users
-    // await factory(UserEntity)().createMany(5);
+    if (await userRepository.findOne()) {
+      return;
+    }
+
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.startTransaction();
+
+    const users = (
+      await Promise.all(
+        userData.map(async (item) => ({
+          ...item,
+          password: await EncryptHelper.hash(item.password),
+        })),
+      )
+    ).map((item) => new UserEntity(item));
+
+    try {
+      await queryRunner.manager.save(users);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
