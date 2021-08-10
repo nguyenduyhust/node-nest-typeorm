@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
+import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
-import { UserDTO } from './user.dto';
+import { GetUsersResponseDTO, UserDTO } from './user.dto';
 import { UserEntity } from './user.entity';
+import { UserFilteringOptions, UserSortingOptions } from './user.interface';
 
 @Injectable()
 export class UserService {
@@ -13,16 +14,33 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getMany(options: IPaginationOptions): Promise<Pagination<UserDTO>> {
-    const queryBuilder = this.userRepository.createQueryBuilder('u');
-    queryBuilder.orderBy('u.createdAt', 'DESC');
+  async getMany(
+    paginationOptions: IPaginationOptions,
+    sortingOptions: UserSortingOptions,
+    filteringOptions: UserFilteringOptions,
+  ): Promise<GetUsersResponseDTO> {
+    const { sortBy, orderBy } = sortingOptions;
+    const { email, fullName } = filteringOptions;
+    const queryBuilder = this.userRepository.createQueryBuilder('qb');
 
-    const records = await paginate<UserEntity>(queryBuilder, options);
+    if (email && email.length > 0) {
+      queryBuilder.andWhere('qb.email like :email', { email: `%${email}%` });
+    }
+
+    if (fullName && fullName.length > 0) {
+      queryBuilder.andWhere('qb.fullName like :fullName', { fullName: `%${fullName}%` });
+    }
+
+    queryBuilder.orderBy(`qb.${sortBy}`, orderBy);
+
+    const records = await paginate<UserEntity>(queryBuilder, paginationOptions);
     const items: UserDTO[] = records.items.map((item) => ({ ...new UserDTO(item) }));
 
     return {
-      ...records,
       items,
+      pagination: records.meta,
+      sorting: sortingOptions,
+      filtering: filteringOptions,
     };
   }
 }
