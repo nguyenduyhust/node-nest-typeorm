@@ -21,12 +21,12 @@ export class UserController {
   })
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
-  getEvents(
+  getMany(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
   ) {
     limit = limit > 100 ? 100 : limit;
-    return this.userService.getUsers({
+    return this.userService.getMany({
       page,
       limit,
       route: `${this.configService.get('apiUrl')}/users`,

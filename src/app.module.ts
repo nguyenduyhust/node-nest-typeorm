@@ -5,7 +5,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration, { EnvConfiguration } from '@config/configuration';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { AuthService } from './modules/auth/auth.service';
 import { AuthMiddleware } from './app.middleware';
 
 @Module({
@@ -32,15 +31,17 @@ import { AuthMiddleware } from './app.middleware';
       },
       inject: [ConfigService],
     }),
-    RouterModule.forRoutes([
-      { path: 'api', module: AuthModule },
-      { path: 'api', module: UserModule },
-    ]),
+    RouterModule.forRoutes(
+      [AuthModule, UserModule].map((module) => ({
+        path: 'api',
+        module,
+      })),
+    ),
     UserModule,
     AuthModule,
   ],
   controllers: [],
-  providers: [AuthService],
+  providers: [],
 })
 export class AppModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {

@@ -2,27 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 
-import { UserService } from '@modules/user/user.service';
 import { RegisterUserInput, GenerateTokenReturn } from './auth.interface';
 import { UserDTO } from '../user/user.dto';
 import { EnvConfiguration } from '~/config/configuration';
 import { CookieUtils, EncryptUtils, ErrorUtils, TokenUtils } from '~/common/utils';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from '../user/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
     private configService: ConfigService<EnvConfiguration>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   async register(payload: RegisterUserInput): Promise<boolean> {
-    await this.userService.create(payload);
+    const user = await this.userRepository.findOne({ email: payload.email });
+    if (user) {
+      throw ErrorUtils.BadRequestException('User already exists');
+    }
+
+    await new UserEntity({
+      ...payload,
+      password: await UserEntity.hashPassword(payload.password),
+    }).save();
 
     return true;
   }
 
   async login(email: string, password: string): Promise<GenerateTokenReturn> {
-    const user = await this.userService.findOneByEmail(email);
+    const user = await this.userRepository.findOne({ email });
     if (!user) {
       throw ErrorUtils.BadRequestException('User does not exist');
     }
@@ -43,7 +54,7 @@ export class AuthService {
         accessToken,
         `${this.configService.get('secret')}`,
       );
-      const user = await this.userService.findOneById(tokenDataObj.user_id);
+      const user = await this.userRepository.findOne(tokenDataObj.user_id);
       if (!user) {
         throw ErrorUtils.UnauthorizedException('Invalid token');
       }
@@ -78,7 +89,7 @@ export class AuthService {
         refreshToken,
         `refresh_${this.configService.get('secret')}`,
       );
-      const user = await this.userService.findOneById(tokenDataObj.user_id);
+      const user = await this.userRepository.findOne(tokenDataObj.user_id);
       if (!user) {
         throw ErrorUtils.BadRequestException('Invalid token');
       }
