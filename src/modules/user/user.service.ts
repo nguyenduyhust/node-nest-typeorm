@@ -6,6 +6,7 @@ import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { GetUsersResponseDTO, UserDTO } from './user.dto';
 import { UserFilteringOptions, UserSortingOptions } from './user.interface';
 import { UserEntity } from '~/db/entities';
+import { ErrorUtils } from '~/common/utils';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,15 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
+
+  async getMe(userId: string): Promise<UserDTO> {
+    const user = await this.userRepository.findOne(userId);
+    if (!user) {
+      throw ErrorUtils.BadRequestException('User does not exist');
+    }
+
+    return new UserDTO(user);
+  }
 
   async getMany(
     paginationOptions: IPaginationOptions,
