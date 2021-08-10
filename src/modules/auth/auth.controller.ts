@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Res } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
+import { CookieUtils } from '~/common/utils';
 
 import { SignUpDTO, AuthValidateDTO, AuthResponseDTO, AuthRefreshTokenDTO } from './auth.dto';
 import { AuthService } from './auth.service';
-import { CookieHelper } from '@helpers/cookie.helper';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -29,7 +29,7 @@ export class AuthController {
   @Post('validate')
   async validate(@Body() payload: AuthValidateDTO, @Res() res: Response) {
     const loginData = await this.authService.login(payload.email, payload.password);
-    CookieHelper.setToken(res, loginData.token);
+    CookieUtils.setToken(res, loginData.token);
     return res.json(loginData);
   }
 
@@ -51,7 +51,7 @@ export class AuthController {
   })
   @Post('sign-out')
   async signOut(@Res() res: Response) {
-    CookieHelper.clearToken(res);
+    CookieUtils.clearToken(res);
     return res.json(true);
   }
 }

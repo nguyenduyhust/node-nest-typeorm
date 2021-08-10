@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
+import { EncryptUtils } from '~/common/utils';
 import { UserEntity } from '~/modules/user/user.entity';
-import { EncryptHelper } from '@helpers/encrypt.helper';
 import * as userData from './data/users.json';
 
 export default class CreateUsers implements Seeder {
@@ -19,7 +19,7 @@ export default class CreateUsers implements Seeder {
       await Promise.all(
         userData.map(async (item) => ({
           ...item,
-          password: await EncryptHelper.hash(item.password),
+          password: await EncryptUtils.hash(item.password),
         })),
       )
     ).map((item) => new UserEntity(item));

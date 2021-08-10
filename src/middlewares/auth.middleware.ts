@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { AuthService } from '@modules/auth/auth.service';
-import { ErrorHelper } from '@helpers/error.helper';
+import { ErrorUtils } from '~/common/utils';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -10,7 +10,7 @@ export class AuthMiddleware implements NestMiddleware {
     // validate request
     const user = await this.authService.validateRequest(req);
     if (!user) {
-      ErrorHelper.UnauthorizedException('Unauthorized');
+      ErrorUtils.UnauthorizedException('Unauthorized');
     }
     req.user = user;
     next();

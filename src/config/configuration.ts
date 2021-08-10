@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { StringHelper } from '~/helpers/string.helper';
+import { StringUtils } from '~/common/utils';
 
 export interface EnvConfiguration {
   nodeEnv: 'development' | 'staging' | 'production';
@@ -42,7 +42,7 @@ const validationSchema = Joi.object<any, EnvConfiguration>({
 export default () => {
   const env: Record<string, any> = {};
   for (const key in process.env) {
-    env[key] = StringHelper.getEnvWithoutComment(process.env[key] || '');
+    env[key] = StringUtils.getEnvWithoutComment(process.env[key] || '');
   }
 
   const envConfiguration: Partial<EnvConfiguration> = {

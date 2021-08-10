@@ -20,7 +20,6 @@
       "~/*": ["src/*"],
       "@common/*": ["src/common/*"],
       "@config/*": ["src/config/*"],
-      "@helpers/*": ["src/helpers/*"],
       "@modules/*": ["src/modules/*"],
     }
   },

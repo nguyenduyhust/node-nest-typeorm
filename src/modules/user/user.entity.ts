@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
-import { EncryptHelper } from '@helpers/encrypt.helper';
 import { AbstractEntity } from '~/common/entities/abstract.entity';
+import { EncryptUtils } from '~/common/utils';
 
 @Entity('user')
 export class UserEntity extends AbstractEntity {
@@ -28,7 +28,7 @@ export class UserEntity extends AbstractEntity {
   password: string;
 
   static async hashPassword(password: string) {
-    return EncryptHelper.hash(password);
+    return EncryptUtils.hash(password);
   }
 
   @Column({
