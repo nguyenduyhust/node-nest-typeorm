@@ -17,7 +17,11 @@ async function bootstrap() {
   );
   const configService: ConfigService<EnvConfiguration> = app.get(ConfigService);
 
+  // cookie parser
   app.use(cookieParser());
+
+  // enable cors
+  app.enableCors({ origin: configService.get('allowedHosts') });
 
   // swagger
   if (configService.get('enableSwagger')) {
