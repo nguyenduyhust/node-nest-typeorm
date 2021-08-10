@@ -6,9 +6,9 @@ import { UserDTO } from '../user/user.dto';
 import { EnvConfiguration } from '~/config/configuration';
 import { EncryptUtils, ErrorUtils, TokenUtils } from '~/common/utils';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../user/user.entity';
 import { Repository } from 'typeorm';
 import { LoginResponseDTO, RefreshAccessTokenResponseDTO, RegisterDTO } from './auth.dto';
+import { UserEntity } from '~/db/entities';
 
 @Injectable()
 export class AuthService {

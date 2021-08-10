@@ -1,6 +1,6 @@
 import { define } from 'typeorm-seeding';
-import { UserEntity } from '~/modules/user/user.entity';
 import * as Faker from 'faker';
+import { UserEntity } from '~/db/entities';
 
 define(UserEntity, () => {
   return new UserEntity({

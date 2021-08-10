@@ -5,7 +5,7 @@ import { IsEnum, IsOptional } from 'class-validator';
 import { AbstractDTO } from '~/common/dtos/abstract.dto';
 import { PaginationDTO } from '~/common/dtos/pagination.dto';
 import { OrderByEnum } from '~/common/enums/sorting.enum';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '~/db/entities';
 import { UserSortByEnum } from './user.enum';
 
 export interface UserDTOOptions {}

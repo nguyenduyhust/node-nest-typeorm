@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { StringHelper } from './src/helpers/string.helper';
+import { StringUtils } from './src/common/utils';
 import { ConnectionOptions } from 'typeorm-seeding';
 
 dotenv.config({
@@ -8,7 +8,7 @@ dotenv.config({
 
 const env: Record<string, any> = {};
 for (const key in process.env) {
-  env[key] = StringHelper.getEnvWithoutComment(process.env[key] || '');
+  env[key] = StringUtils.getEnvWithoutComment(process.env[key] || '');
 }
 
 const connectionOptions: ConnectionOptions = {
@@ -20,7 +20,7 @@ const connectionOptions: ConnectionOptions = {
   database: env.DATABASE_NAME,
   synchronize: false,
   logging: true,
-  entities: ['src/modules/**/*.entity.ts'],
+  entities: ['src/db/**/*.entity.ts'],
   migrations: ['src/db/migrations/**/*.ts'],
   cli: {
     migrationsDir: 'src/db/migrations',

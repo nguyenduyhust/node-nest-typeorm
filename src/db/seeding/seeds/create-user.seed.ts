@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 import { EncryptUtils } from '~/common/utils';
-import { UserEntity } from '~/modules/user/user.entity';
+import { UserEntity } from '~/db/entities';
 import * as userData from './data/users.json';
 
 export default class CreateUsers implements Seeder {

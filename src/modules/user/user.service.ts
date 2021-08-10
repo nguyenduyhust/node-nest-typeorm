@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 import { GetUsersResponseDTO, UserDTO } from './user.dto';
-import { UserEntity } from './user.entity';
 import { UserFilteringOptions, UserSortingOptions } from './user.interface';
+import { UserEntity } from '~/db/entities';
 
 @Injectable()
 export class UserService {
