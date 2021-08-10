@@ -5,8 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration, { EnvConfiguration } from '@config/configuration';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { AuthMiddleware } from '~/middlewares/auth.middleware';
 import { AuthService } from './modules/auth/auth.service';
+import { AuthMiddleware } from './app.middleware';
 
 @Module({
   imports: [
