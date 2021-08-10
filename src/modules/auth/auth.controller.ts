@@ -1,9 +1,14 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
-import { CookieUtils } from '~/common/utils';
 
-import { SignUpDTO, AuthValidateDTO, AuthResponseDTO, AuthRefreshTokenDTO } from './auth.dto';
+import {
+  LoginDTO,
+  LoginResponseDTO,
+  RefreshAccessTokenDTO,
+  RefreshAccessTokenResponseDTO,
+  RegisterDTO,
+} from './auth.dto';
 import { AuthService } from './auth.service';
 
 @ApiTags('auth')
@@ -12,46 +17,33 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @ApiResponse({
-    description: 'Register user',
-    status: 200,
+    description: 'Register',
     type: Boolean,
   })
-  @Post('sign-up')
-  async signUp(@Body() payload: SignUpDTO) {
+  @HttpCode(200)
+  @Post('register')
+  async register(@Body() payload: RegisterDTO) {
     return this.authService.register(payload);
   }
 
   @ApiResponse({
-    status: 200,
-    isArray: false,
-    type: AuthResponseDTO,
+    description: 'Login',
+    type: LoginResponseDTO,
   })
-  @Post('validate')
-  async validate(@Body() payload: AuthValidateDTO, @Res() res: Response) {
+  @HttpCode(200)
+  @Post('login')
+  async login(@Body() payload: LoginDTO, @Res() res: Response) {
     const loginData = await this.authService.login(payload.email, payload.password);
-    CookieUtils.setToken(res, loginData.token);
     return res.json(loginData);
   }
 
   @ApiResponse({
-    description: 'Refreshing Access Tokens',
-    status: 200,
-    isArray: false,
-    type: AuthResponseDTO,
+    description: 'Refreshing Access Token',
+    type: RefreshAccessTokenResponseDTO,
   })
-  @Post('refresh-token')
-  async token(@Body() payload: AuthRefreshTokenDTO) {
-    return this.authService.refreshToken(payload.refresh_token);
-  }
-
-  @ApiResponse({
-    description: 'Sign out',
-    status: 200,
-    type: Boolean,
-  })
-  @Post('sign-out')
-  async signOut(@Res() res: Response) {
-    CookieUtils.clearToken(res);
-    return res.json(true);
+  @HttpCode(200)
+  @Post('refresh-access-token')
+  async token(@Body() payload: RefreshAccessTokenDTO) {
+    return this.authService.refreshAccessToken(payload.refreshToken);
   }
 }

@@ -1,11 +1,12 @@
 import { Controller, Get, Query, ParseIntPipe, DefaultValuePipe } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
 import { UserPaginationDTO } from './user.dto';
 import { UserService } from './user.service';
 import { EnvConfiguration } from '~/config/configuration';
 
+@ApiBearerAuth()
 @ApiTags('users')
 @Controller('users')
 export class UserController {

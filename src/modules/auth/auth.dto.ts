@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MaxLength, IsNotEmpty, IsOptional, MinLength, IsEmail } from 'class-validator';
 
-import { UserDTO } from '@modules/user/user.dto';
-
-export class SignUpDTO {
+export class RegisterDTO {
   @ApiProperty()
   @MaxLength(60, { message: '60' })
   @IsNotEmpty({ message: 'required' })
@@ -27,7 +25,7 @@ export class SignUpDTO {
   phone: string;
 }
 
-export class AuthValidateDTO {
+export class LoginDTO {
   @ApiProperty()
   @IsEmail({}, { message: 'invalid' })
   email: string;
@@ -37,19 +35,21 @@ export class AuthValidateDTO {
   password: string;
 }
 
-export class AuthResponseDTO {
+export class LoginResponseDTO {
   @ApiProperty()
-  token: string;
+  accessToken: string;
 
   @ApiProperty()
-  refresh_token: string;
-
-  @ApiProperty()
-  user: UserDTO;
+  refreshToken: string;
 }
 
-export class AuthRefreshTokenDTO {
+export class RefreshAccessTokenDTO {
   @ApiProperty()
   @IsNotEmpty({ message: 'required' })
-  refresh_token: string;
+  refreshToken: string;
+}
+
+export class RefreshAccessTokenResponseDTO {
+  @ApiProperty()
+  accessToken: string;
 }
