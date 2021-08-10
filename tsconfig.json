@@ -23,5 +23,6 @@
       "@helpers/*": ["src/helpers/*"],
       "@modules/*": ["src/modules/*"],
     }
-  }
+  },
+  "include": ["src"]
 }
